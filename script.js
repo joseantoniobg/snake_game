@@ -1,11 +1,11 @@
-// Define HTML elements
+// HTML elements
 const board = document.getElementById('game-board');
 const instructionText = document.getElementById('instruction-text');
 const logo = document.getElementById('logo');
 const score = document.getElementById('score');
 const highScore = document.getElementById('high-score');
 
-// Define game variables
+// Game global variables
 const boardSize = 20;
 let snake = [{ x: boardSize / 2, y: boardSize / 2 }];
 let food = generateFood();
@@ -14,7 +14,6 @@ let gameInterval;
 let gameSpeedDelay = 200;
 let gameStarted = false;
 
-// Draw game map / snake / food
 function draw() {
   board.innerHTML = '';
   drawSnake();
@@ -22,7 +21,6 @@ function draw() {
   updateScore();
 }
 
-// Draw Snake
 function drawSnake() {
   snake.forEach(snakeCell => {
     const snakeElement = createGameElement('div', 'snake');
@@ -31,7 +29,6 @@ function drawSnake() {
   })
 }
 
-// Draw food
 function drawFood() {
   if (gameStarted) {
     const foodElement = createGameElement('div', 'food');
@@ -40,25 +37,21 @@ function drawFood() {
   }
 }
 
-// Create Snake or food cube/div
 function createGameElement(elementType, elementClass) {
   const element = document.createElement(elementType);
   element.className = elementClass;
   return element;
 }
 
-// Set the position of th snake or fruit
 function setPosition(element, position) {
   element.style.gridColumn = position.x;
   element.style.gridRow = position.y;
 }
 
-//Get random position
 function getRandomPosition() {
   return Math.floor(Math.random() * boardSize) + 1;
 }
 
-// Generate food
 function generateFood() {
   const position = { x: getRandomPosition(), y: getRandomPosition() };
   if (snake.some(snakeCell => snakeCell.x === position.x && snakeCell.y === position.y)) {
@@ -114,7 +107,6 @@ function increaseSpeed() {
   gameSpeedDelay -= gameSpeedDelay >= 150 ? 5 : 3;
 }
 
-// Start game function
 function startGame() {
   gameStarted = true;
   instructionText.style.display = 'none';
@@ -152,7 +144,6 @@ function updateScore() {
   }
 }
 
-// Keypress event listener
 function handleKeyPress(event) {
   if (event.code === 'Space' || event.key === ' ') {
     if (!gameStarted) startGame();
